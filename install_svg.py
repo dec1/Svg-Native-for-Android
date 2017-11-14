@@ -73,9 +73,6 @@ def matching_files(dir_parent, patterns):
 #----------------------------------------------------
 
 def copy_headers():
-    if os.path.exists(dst_dir_inc):
-        shutil.rmtree(dst_dir_inc)
-
     src_dirs = matching_sub_dirs(src_dir_jni, include_header_dirs)
 
     for src_dir in src_dirs:
@@ -85,9 +82,6 @@ def copy_headers():
 # ----------------------------------------------------
 
 def copy_libs():
-    if os.path.exists(dst_dir_lib):
-        shutil.rmtree(dst_dir_lib)
-
     #abis = ("armeabi-v7a", "x86")
     lib_src_dir= src_dir_lib
 
@@ -99,6 +93,19 @@ def copy_libs():
                 os.makedirs(dst_dir)
             shutil.copy2(file, dst_dir)
 
+# ----------------------------------------------------
+def clean_libs():
+    if os.path.exists(dst_dir_lib):
+        shutil.rmtree(dst_dir_lib)
+# ----------------------------------------------------      
+
+def clean_headers():
+    if os.path.exists(dst_dir_inc):
+        shutil.rmtree(dst_dir_inc)
+# ----------------------------------------------------  
+        
+clean_headers()
+clean_libs()
 
 copy_headers()
 copy_libs()
