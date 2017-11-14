@@ -1,0 +1,84 @@
+Android NDK: android-12 is unsupported. Using minimum supported version android-14.    
+
+
+Configuration 'compile' in project ':app' is deprecated. Use 'implementation' instead.
+
+
+
+
+(1) Install Java Jdk development environment
+--------------------------------------------
+(not just runtime) installed via package manager.
+In Suse this is in package "java-1_8_0-openjdk-devel"
+Could not find tools.jar. Please check that /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre contains a valid JDK installation.
+
+
+(2) Install libncurses 5
+-------------------------
+
+(Otherwise get error message: " Could not find tools.jar. Please check that /usr/lib64/jvm/java-1.8.0-openjdk-1.8.0/jre contains a valid JDK installation...")
+
+
+(3) local.properties
+------------------------------------------
+ensure file "local.properties" exists in dir "tux" (ie in same dir as "app/","settings.gradle" etc)
+and defines ndk.dir and sdk.dir eg:
+
+
+    ndk.dir=/home/declan/Documents/zone/mid/lib/android/sdk/ndk-bundle
+    sdk.dir=/home/declan/Documents/zone/mid/lib/android/sdk
+
+    
+(4) Open project with Android Studio.
+------------------------------------
+(Android Studio - Open existing project - choose "tux" dir).
+This creates the gradle wrapper (gradlew)
+
+(5) Specify which abis you want to build 
+----------------------------------------
+In app/build.gradle modfiy "abiFilters" as appropriate eg.
+    abiFilters "armeabi-v7a",  "x86"
+
+(5) add "google()" repo
+-----------------------
+to repositories in tux/build.gradle:
+
+    buildscript {
+        repositories {
+            jcenter()
+            google()
+        }
+   .........     
+    
+    
+(6) Make gradle wrapper executable
+------------------------------------
+
+> cd tux
+
+> chmod a+x ./gradlew
+
+
+(7) start build:
+----------------
+> ./gradlew assembleRelease
+
+
+
+.so files built in:
+-----------------
+perepujal/app/build/intermediates/ndkBuild/release/obj/local/
+    armeabi-v7a
+    x86
+    
+.h files in
+-------------
+perepujal/app/src/main/jni
+    cairo*..
+    
+    
+    
+python "install" script    
+    
+    
+ 
